@@ -1,0 +1,25 @@
+org: koruro
+app: my-typescript-http-api-app
+service: my-typescript-http-api-app
+
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: "20201221"
+
+functions:
+  watermark:
+    handler: handler.watermark
+    events:
+      - httpApi:
+          path: /watermark
+          method: post
+    environment:
+      SPACE_ID: ${param:SPACE_ID}
+      CMA_ACCESS_TOKEN: ${param:CMA_ACCESS_TOKEN}
+      WATERMARK_IMAGE_URL: ${param:WATERMARK_IMAGE_URL}
+
+plugins:
+  - serverless-plugin-typescript
